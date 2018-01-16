@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 <?php
 /* ac_loop_before hook
-*	@hooked ac_loop_before 	10
+*   @hooked ac_loop_before  10
 */
 do_action('ac/templates/loop_start');
 ?>
@@ -27,17 +27,18 @@ do_action('ac/templates/loop_start');
 <?php while (AC()->response['query']->have_posts()) : AC()->response['query']->the_post(); ?>
 	<?php
 	/* ac_loop_post hook
-	*	@hooked ac_loop_post_start 	10
-	*	@hooked ac_loop_post	 	20
-	*	@hooked ac_loop_post_end 	30
+	*   @hooked ac_loop_post_start  10
+	*   @hooked ac_loop_post        20
+	*   @hooked ac_loop_post_end    30
 	*/
 	do_action('ac/templates/loop_post');
 	?>
-<?php endwhile; wp_reset_query(); ?>
+<?php endwhile; ?>
+<?php wp_reset_query(); ?>
 
 <?php
 /* ac_loop_end hook
-*	@hooked ac_loop_end 	10
+*   @hooked ac_loop_end  10
 */
 do_action('ac/templates/loop_end');
 ?>

@@ -20,8 +20,8 @@ foreach($filter_keys as $filter_key){
 	$default_selected = (empty($filter_query[$filter_key])) ? 'selected' : '';
 
 	echo '<div class="form-field">';
-	echo 	'<select name="tax_query['. $filter_key .'][terms]" class="'. $custom_classes .'">';
-	echo 		'<option '.$default_selected.' value>'.$default_option.'</option>';
+	echo     '<select name="tax_query['. $filter_key .'][terms]" class="'. $custom_classes .'">';
+	echo         '<option '.$default_selected.' value>'.$default_option.'</option>';
 	
 	foreach($terms as $term_key => $term){
 		$selected = '';
@@ -32,9 +32,9 @@ foreach($filter_keys as $filter_key){
 			}
 		}
 
-        echo '<option value="'.$term->term_id.'" '.$selected.'>'.$term->name.'</option>';
+		echo '<option value="'.$term->term_id.'" '.$selected.'>'.$term->name.'</option>';
 	};
-	echo 	'</select>';
+	echo     '</select>';
 	echo '</div>';
 	wp_reset_query();
 }

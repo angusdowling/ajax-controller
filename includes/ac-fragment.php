@@ -24,6 +24,7 @@ class AC_Fragment {
 	 */
 	public $response = null;
 
+
 	/**
 	 * Set templates.
 	 */
