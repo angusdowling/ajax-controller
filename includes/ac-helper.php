@@ -2,14 +2,17 @@
 /**
  * Helper class
  *
- * @author 		Yoke
- * @package 	AjaxController/Includes
- * @version     0.1.0
+ * @author      Yoke
+ * @package     AjaxController/Includes
+ * @since       0.1.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) )
+{
 	exit; // Exit if accessed directly
 }
+
+if ( ! class_exists( 'AC_Fragment' ) ) :
 
 class AC_Helper {
 	/**
@@ -22,31 +25,38 @@ class AC_Helper {
 	 */
 	public static function get_template_part( $slug, $name = '' )
 	{
+
 		$template = '';
-	
+
 		// Look in yourtheme/slug-name.php and yourtheme/ajaxcontroller/slug-name.php
-		if ( $name ) {
+		if ( $name )
+		{
 			$template = locate_template( array( "{$slug}-{$name}.php", self::template_path() . "{$slug}-{$name}.php" ) );
 		}
-	
+
 		// Get default slug-name.php
-		if ( ! $template && $name && file_exists( self::plugin_path() . "/templates/{$slug}-{$name}.php" ) ) {
+		if ( ! $template && $name && file_exists( self::plugin_path() . "/templates/{$slug}-{$name}.php" ) )
+		{
 			$template = self::plugin_path() . "/templates/{$slug}-{$name}.php";
 		}
-	
+
 		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/ajaxcontroller/slug.php
-		if ( ! $template ) {
+		if ( ! $template )
+		{
 			$template = locate_template( array( "{$slug}.php", self::template_path() . "{$slug}.php" ) );
 		}
-	
+
 		// Allow 3rd party plugin filter template file from their plugin
 		$template = apply_filters( 'ac_get_template_part', $template, $slug, $name );
-	
-		if ( $template ) {
+
+		if ( $template )
+		{
 			load_template( $template, false );
 		}
+
 	}
-	
+
+
 	/**
 	 * Get other templates, passing attributes and including the file.
 	 *
@@ -59,13 +69,16 @@ class AC_Helper {
 	 */
 	public static function get_template( $template_name, $args = array(), $template_path = '', $default_path = '' )
 	{
-		if ( $args && is_array( $args ) ) {
+
+		if ( $args && is_array( $args ) )
+		{
 			extract( $args );
 		}
 
 		$located = self::locate_template( $template_name, $template_path, $default_path );
 
-		if ( ! file_exists( $located ) ) {
+		if ( ! file_exists( $located ) )
+		{
 			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
 			return;
 		}
@@ -75,16 +88,18 @@ class AC_Helper {
 		include( $located );
 
 		do_action( 'ac_after_template_part', $template_name, $template_path, $located, $args );
+
 	}
+
 
 	/**
 	 * Locate a template and return the path for inclusion.
 	 *
 	 * This is the load order:
 	 *
-	 *		yourtheme		/	$template_path	/	$template_name
-	 *		yourtheme		/	$template_name
-	 *		$default_path	/	$template_name
+	 *      yourtheme       /   $template_path / $template_name
+	 *      yourtheme       /   $template_name
+	 *      $default_path   /   $template_name
 	 *
 	 * @access public
 	 * @param string $template_name
@@ -94,19 +109,24 @@ class AC_Helper {
 	 */
 	public static function locate_template( $template_name, $template_path = '', $default_path = '' )
 	{
-		if ( ! $template_path ) {
-			if( !empty(AC()->options) && is_array(AC()->options) && array_key_exists('template_path', AC()->options)){
+
+		if ( ! $template_path )
+		{
+			if( !empty( AC()->options ) && is_array( AC()->options ) && array_key_exists( 'template_path', AC()->options ) )
+			{
 				$template_path = self::template_path() . AC()->options['template_path'] . '/';
 			}
 
-			else {
+			else
+			{
 				$template_path = self::template_path();
 			}
 		}
 
 		$template_base_path = self::template_path() . 'default/';
 
-		if ( ! $default_path ) {
+		if ( ! $default_path )
+		{
 			$default_path = self::plugin_path() . '/templates/';
 		}
 
@@ -119,7 +139,8 @@ class AC_Helper {
 		);
 
 		// Look in theme default path
-		if( ! $template ) {
+		if( ! $template )
+		{
 			$template = locate_template(
 				array(
 					trailingslashit( $template_base_path ) . $template_name,
@@ -129,13 +150,16 @@ class AC_Helper {
 		}
 
 		// Get default template
-		if ( ! $template ) {
+		if ( ! $template )
+		{
 			$template = $default_path . $template_name;
 		}
 
 		// Return what we found
 		return apply_filters('ac_locate_template', $template, $template_name, $template_path);
+
 	}
+
 
 	/**
 	 * Get the plugin url.
@@ -144,8 +168,11 @@ class AC_Helper {
 	 */
 	public static function plugin_url()
 	{
+
 		return untrailingslashit( plugins_url( '/', dirname(__FILE__) ) );
+
 	}
+
 
 	/**
 	 * Get the plugin path.
@@ -154,8 +181,11 @@ class AC_Helper {
 	 */
 	public static function plugin_path()
 	{
+
 		return untrailingslashit( plugin_dir_path( dirname(__FILE__) ) );
+
 	}
+
 
 	/**
 	 * Get the template path.
@@ -164,34 +194,46 @@ class AC_Helper {
 	 */
 	public static function template_path()
 	{
+
 		return apply_filters( 'AC_TEMPLATE_PATH', 'ajaxcontroller/' );
+
 	}
-	
+
+
 	/**
 	 * Check if Wordpress AJAX variable is set.
 	 */
 	public static function doing_ajax()
 	{
-		if(defined('DOING_AJAX') && DOING_AJAX){
+
+		if( defined( 'DOING_AJAX' ) && DOING_AJAX )
+		{
 			return true;
 		}
 
 		return false;
+
 	}
+
 
 	/**
 	 * Convert an array to bracket syntax.
 	 */
-	public static function convert_bracket_syntax($arr, $arrkey, $depth = 0) {
+	public static function convert_bracket_syntax($arr, $arrkey, $depth = 0)
+	{
+
 		$result = array();
 
-		foreach($arr as $key => $value) {
+		foreach( $arr as $key => $value )
+		{
 			$output = "[${key}]";
 
-			if(!is_array($value)) {   
+			if( !is_array( $value ) )
+			{
 				$output .= '';
 
-				if($depth == 0 && strstr($output, $arrkey) === false){
+				if( $depth == 0 && strstr( $output, $arrkey ) === false )
+				{
 					$output = $arrkey . $output;
 				}
 
@@ -199,11 +241,18 @@ class AC_Helper {
 					'key'   => $output,
 					'value' => $value
 				);
-			} else {
-				foreach(AC_Helper::convert_bracket_syntax($value, $arrkey, $depth + 1) as $sub_val) {
-					if($depth == 0 && strstr($output, $arrkey) === false){
+			}
+
+			else
+			{
+				foreach( AC_Helper::convert_bracket_syntax( $value, $arrkey, $depth + 1 ) as $sub_val )
+				{
+					if( $depth == 0 && strstr( $output, $arrkey ) === false )
+					{
 						$sub_val['key'] = $arrkey . $output . $sub_val['key'];
-					} else {
+					}
+
+					else {
 						$sub_val['key'] = $output . $sub_val['key'];
 					}
 
@@ -213,18 +262,26 @@ class AC_Helper {
 		}
 
 		return $result;
+
 	}
+
 
 	/**
 	 * Check if substring is in array.
 	 */
-	public static function substr_in_array($arr, $str){
-		foreach($arr as $item) {
-			if (stripos($str, $item) != false) {
+	public static function substr_in_array($arr, $str)
+	{
+		foreach( $arr as $item )
+		{
+			if ( stripos( $str, $item ) != false )
+			{
 				return true;
 			}
 		}
-	
+
 		return false;
 	}
+
 }
+
+endif;

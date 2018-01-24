@@ -2,9 +2,9 @@
 /**
  * Display a list of checkboxes for taxonomy or meta queries
  *
- * @author 		Yoke
- * @package 	AjaxController/Templates/Filters
- * @version     0.1.0
+ * @author      Yoke
+ * @package     AjaxController/Templates/Filters
+ * @since       0.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) )

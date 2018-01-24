@@ -1,6 +1,10 @@
 {
-    "name": "yokedevelopers/ajax-controller",
-    "type": "wordpress-plugin",
+	"name": "yokedevelopers/ajax-controller",
+	"description": "Easily reload custom post types with AJAX",
+	"version": "0.1.2",
+	"type": "wordpress-plugin",
+	"keywords": ["wordpress", "ajax", "post"],
+	"license": "MIT",
     "require": {
         "composer/installers": "~1.0"
     }
